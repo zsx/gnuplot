@@ -48,6 +48,7 @@ TOP = .
 # /G3 means optimize code for 386
 # /MT means include multi-thread support
 # /MD means include multi-thread support (DLL)
+# /Zi means enable debug info
 
 CC = cl /c
 LD = link
@@ -57,7 +58,8 @@ OPTIONS = /DUSE_MOUSE
 OPTIONS = $(OPTIONS) /DHAVE_LIBGD /DHAVE_GD_GIF /DGIF_ANIMATION /DHAVE_GD_PNG /DHAVE_GD_JPEG /DHAVE_GD_TTF
 OPTIONS = $(OPTIONS) /DHAVE_LIBPDF
 OPTIONS = $(OPTIONS) /DGNUPLOT_HISTORY
-CBASEFLAGS = /G5 /GX /GR /MD /O2 /nologo
+#CBASEFLAGS = /EHsc /GR /MD /O2 /nologo
+CBASEFLAGS = /EHsc /GR /MDd /Od /nologo /Zi /D_DEBUG
 CFLAGS = $(CBASEFLAGS) /I$(TOP) /D_Windows /DWIN32 /DHAVE_CONFIG_H /D__MSC__ /DHELPFILE=\"$(HELPFILE)\" $(OPTIONS)
 CONSOLE_CFLAGS = /DWGP_CONSOLE
 
@@ -68,11 +70,11 @@ MACHINE = IX86
 !ENDIF
 
 # paths for external libs added here... 
-LDFLAGS = /subsystem:windows /nologo /MACHINE:$(MACHINE) /MAP:GNUPLOT /libpath:..\src\pdflib\pdflib /libpath:..\src\gdwin32 
+LDFLAGS = /subsystem:windows /nologo /DEBUG /MACHINE:$(MACHINE) /MAP:GNUPLOT /libpath:..\src\pdflib\pdflib /libpath:..\src\gd-2.0.35\windows /libpath:..\src\libs
 
 # ...and here.
 # see other terminal defines in term.h
-TERMFLAGS = /I..\\term /I..\\src\\pdflib\\pdflib /I..\\src\\gdwin32 /DGNUPLOT_PS_DIR=\"$(GNUPLOT_PS_DIR)\"
+TERMFLAGS = /I..\\term /I..\\src\\pdflib\\pdflib /I..\\src\\gd-2.0.35 /DGNUPLOT_PS_DIR=\"$(GNUPLOT_PS_DIR)\"
 
 # macros for makefile.all
 O=obj
@@ -204,13 +206,14 @@ pgnuplot.exe: $(ALL_CONSOLE_OBJS) win\wgnuplot.def wgnuplot.res texticon.ico grp
 $(ALL_CONSOLE_OBJS)
 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib
 advapi32.lib shell32.lib ole32.lib oleaut32.lib comctl32.lib
-gd.lib wxmsw28.lib wxtiff.lib
+bgd.lib pdflib.lib
 jpeg.lib png.lib
-glib-2.0.lib gobject-2.0.lib gmodule-2.0.lib
-cairo.lib pango-1.0.lib pangocairo-1.0.lib
 wgnuplot.res
 <<
 
+#bgd.lib wxmsw28.lib wxtiff.lib
+#glib-2.0.lib gobject-2.0.lib gmodule-2.0.lib
+#cairo.lib pango-1.0.lib pangocairo-1.0.lib
 # extract icons from wgnuplot.rc
 texticon.ico: grpicon.ico
 
