@@ -910,7 +910,7 @@ int_error(int t_num, const char str[], va_dcl)
     va_list args;
 #endif
 
-    char error_message[128] = {'\0'};
+    char error_message[1024] = {'\0'};
 
     /* reprint line if screen has been written to */
 
@@ -931,7 +931,7 @@ int_error(int t_num, const char str[], va_dcl)
     VA_START(args, str);
 # if defined(HAVE_VFPRINTF) || _LIBC
     vsnprintf(error_message, sizeof(error_message), str, args);
-    fprintf(stderr,"%.120s",error_message);
+    fprintf(stderr,"%.1020s",error_message);
 # else
     _doprnt(str, args, stderr);
 # endif
