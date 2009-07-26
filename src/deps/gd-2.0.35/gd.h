@@ -71,7 +71,11 @@ extern "C"
 /* 2.0.23: more Type 1 fonts */
 #ifndef DEFAULT_FONTPATH
 /* default fontpath for unix systems  - whatever happened to standards ! */
+#ifndef _WIN32
 #define DEFAULT_FONTPATH "/usr/X11R6/lib/X11/fonts/TrueType:/usr/X11R6/lib/X11/fonts/truetype:/usr/X11R6/lib/X11/fonts/TTF:/usr/share/fonts/TrueType:/usr/share/fonts/truetype:/usr/openwin/lib/X11/fonts/TrueType:/usr/X11R6/lib/X11/fonts/Type1:/usr/lib/X11/fonts/Type1:/usr/openwin/lib/X11/fonts/Type1"
+#else
+#define DEFAULT_FONTPATH "C:/WINDOWS/FONTS"
+#endif
 #endif
 #ifndef PATHSEPARATOR
 #define PATHSEPARATOR ":"
