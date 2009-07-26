@@ -7,7 +7,7 @@ if (BUILD_TEST)
 	ENABLE_TESTING()
 endif(BUILD_TEST)
 
-SET(CMAKE_INCLUDE_PATH  "${GD_SOURCE_DIR}/../zlib/include" "${GD_SOURCE_DIR}/../libpng/include" "${GD_SOURCE_DIR}/../libjpeg/include" "${GD_SOURCE_DIR}/../freetype/include")
+SET(CMAKE_INCLUDE_PATH  "${GD_SOURCE_DIR}/../zlib/include" "${GD_SOURCE_DIR}/../libpng/include" "${GD_SOURCE_DIR}/../libjpeg/include" "${GD_SOURCE_DIR}/../freetype/include" "${GD_SOURCE_DIR}/../freetype/include/freetype2")
 SET(CMAKE_LIBRARY_PATH  "${GD_SOURCE_DIR}/../zlib/lib" "${GD_SOURCE_DIR}/../libpng/lib" "${GD_SOURCE_DIR}/../libjpeg/lib" "${GD_SOURCE_DIR}/../freetype/lib" "${GD_SOURCE_DIR}/../xpm/lib")
 
 if (USE_EXT_GD)
