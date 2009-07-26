@@ -57,7 +57,7 @@ OPTIONS = /DUSE_MOUSE
 OPTIONS = $(OPTIONS) /DHAVE_LIBGD /DHAVE_GD_GIF /DGIF_ANIMATION /DHAVE_GD_PNG /DHAVE_GD_JPEG /DHAVE_GD_TTF
 OPTIONS = $(OPTIONS) /DHAVE_LIBPDF
 OPTIONS = $(OPTIONS) /DGNUPLOT_HISTORY
-CBASEFLAGS = /G5 /GX /GR /MD /O2 /nologo
+CBASEFLAGS = /EHsc /GR /MDd /Od /nologo /Zi /D_DEBUG
 CFLAGS = $(CBASEFLAGS) /I$(TOP) /D_Windows /DWIN32 /DHAVE_CONFIG_H /D__MSC__ /DHELPFILE=\"$(HELPFILE)\" $(OPTIONS)
 CONSOLE_CFLAGS = /DWGP_CONSOLE
 
@@ -69,6 +69,7 @@ MACHINE = IX86
 
 # paths for external libs added here... 
 LDFLAGS = /subsystem:windows /nologo /MACHINE:$(MACHINE) /MAP:GNUPLOT /libpath:..\src\pdflib\pdflib /libpath:..\src\gdwin32\\lib /libpath:..\\src\\deps\\libjpeg\\lib /libpath:..\\src\\deps\\libpng\\lib
+CONSOLE_LDFLAGS = /subsystem:console /nologo /MACHINE:$(MACHINE) /MAP:GNUPLOT /libpath:..\src\pdflib\pdflib /libpath:..\src\gdwin32\\lib /libpath:..\\src\\deps\\libjpeg\\lib /libpath:..\\src\\deps\\libpng\\lib
 
 # ...and here.
 # see other terminal defines in term.h
@@ -203,7 +204,7 @@ wgnuplot_pipes.exe: win\pgnuplot.c
 #glib-2.0.lib gobject-2.0.lib gmodule-2.0.lib
 #cairo.lib pango-1.0.lib pangocairo-1.0.lib
 pgnuplot.exe: $(ALL_CONSOLE_OBJS) win\wgnuplot.def wgnuplot.res texticon.ico grpicon.ico
-	$(LD) $(LDFLAGS) /out:$@ @<<
+	$(LD) $(CONSOLE_LDFLAGS) /out:$@ @<<
 $(ALL_CONSOLE_OBJS)
 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib
 advapi32.lib shell32.lib ole32.lib oleaut32.lib comctl32.lib
@@ -283,3 +284,7 @@ install: default
 	for %f in (BUGS README FAQ Copyright NEWS) do copy ..\%f $(DESTDIR)\%f
 	if not exist $(DESTDIR)\share\gnuplot\demo mkdir $(DESTDIR)\share\gnuplot\demo
 	xcopy /Y ..\demo $(DESTDIR)\share\gnuplot\demo
+	copy /y gdwin32\bin\bgd.dll $(DESTDIR)\bin
+	copy /y pdflib\pdflib\pdflib.dll $(DESTDIR)\bin
+	copy /y deps\libpng\bin\libpng12.dll $(DESTDIR)\bin
+	copy /y deps\libjpeg\bin\jpeg62.dll $(DESTDIR)\bin
